@@ -2,6 +2,16 @@ import { ApolloServer } from 'apollo-server';
 import { typeDefs } from './schema';
 import resolvers from './resolvers';
 import 'newrelic';
+import 'reflect-metadata';
+import { AppDataSource } from './config/database';
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Database connected successfully');
+  })
+  .catch((error) => {
+    console.error('Database connection failed:', error);
+  });
 
 const server = new ApolloServer({
   typeDefs,

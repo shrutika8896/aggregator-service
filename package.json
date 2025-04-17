@@ -20,7 +20,10 @@
     "dotenv": "^10.0.0",
     "graphql": "^15.5.0",
     "graphql-tools": "^9.0.18",
-    "newrelic": "^12.18.0"
+    "newrelic": "^12.18.0",
+    "pg": "^8.14.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.22"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
