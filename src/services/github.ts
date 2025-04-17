@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LoggerService as logger } from '../services/logger';
+import { LoggerService as logger } from './logger';
 import dotenv from 'dotenv';
 dotenv.config();
 const GITHUB_API_URL = 'https://api.github.com/graphql';

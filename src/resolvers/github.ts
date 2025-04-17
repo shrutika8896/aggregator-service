@@ -1,4 +1,4 @@
-import { GithubService } from '../services/githubService';
+import { GithubService } from '../services/github';
 import { LoggerService as logger } from '../services/logger';
 
 export const githubResolvers = {

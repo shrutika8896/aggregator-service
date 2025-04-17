@@ -1,4 +1,4 @@
-import { GitlabService } from '../services/gitlabService';
+import { GitlabService } from '../services/gitlab';
 import dotenv from 'dotenv';
 
 dotenv.config();
