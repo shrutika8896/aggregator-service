@@ -32,7 +32,9 @@ export const githubTypeDefs = gql`
     githubIssues(repo: String!, owner: String!): [Issue!]!
     githubRepositories: [Repository!]!
     githubUserProfile: GitHubUserProfile!
-    githubOrganizationMembers(organization: String!): [GitHubOrganizationMember!]!
+    githubOrganizationMembers(
+      organization: String!
+    ): [GitHubOrganizationMember!]!
   }
 
   type Issue {

@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server';
-import { typeDefs} from './schema';
-import  resolvers from './resolvers';
+import { typeDefs } from './schema';
+import resolvers from './resolvers';
 import 'newrelic';
 
 const server = new ApolloServer({
@@ -17,8 +17,8 @@ const server = new ApolloServer({
       path: error.path,
       extensions: {
         code: error.extensions?.code || 'INTERNAL_SERVER_ERROR',
-        exception: error.extensions?.exception || {},
-      },
+        exception: error.extensions?.exception || {}
+      }
     };
   }
 });

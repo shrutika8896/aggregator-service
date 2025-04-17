@@ -24,7 +24,7 @@ This project is a GraphQL aggregator service that exposes APIs for interacting w
 1. Clone the repository:
 
    ```
-   git clone https://github.com/yourusername/graphql-aggregator-service.git
+   git clone https://github.com/shrutika8896/aggregator-service.git
    cd graphql-aggregator-service
    ```
 
@@ -59,6 +59,7 @@ This project is a GraphQL aggregator service that exposes APIs for interacting w
 The following environment variables are required:
 
 - `GITHUB_TOKEN`: Your GitHub API token.
+- `GITHUB_USERNAME`: Your GitHub username,
 - `GITLAB_TOKEN`: Your GitLab API token.
 - `DATABASE_URL`: Connection string for your PostgreSQL database.
 
@@ -66,14 +67,12 @@ The following environment variables are required:
 
 The following GraphQL queries are available:
 
-- `getGitHubIssues`: Fetches issues from a specified GitHub repository.
-- `getGitLabIssues`: Fetches issues from a specified GitLab project.
+- `githubIssues`: Fetches issues from a specified GitHub repository.
+- `githubRepositories`: Fetches issues from a specified github repository.
+- `githubUserProfile`: Fetch user profile based on username
+- `githubOrganizationMembers`: Fetch members in the organizations
 - Additional queries and mutations can be added as needed.
 
-## Contributing
+## Logging
 
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
+Check the application logs on : https://onenr.io/02R578DpgQb

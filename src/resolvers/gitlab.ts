@@ -8,12 +8,14 @@ export const gitlabResolvers = {
     gitlabIssues: async () => {
       const gitlabToken = process.env.GITLAB_TOKEN;
       if (!gitlabToken) {
-        throw new Error('GitLab token is not defined in the environment variables.');
+        throw new Error(
+          'GitLab token is not defined in the environment variables.'
+        );
       }
       return await GitlabService.getIssues(gitlabToken);
     },
     gitlabProjects: async () => {
       return await GitlabService.getProjects();
-    },
-  },
+    }
+  }
 };
