@@ -5,6 +5,7 @@ dotenv.config();
 const GITHUB_API_URL = 'https://api.github.com/graphql';
 const token = process.env.GITHUB_TOKEN;
 const username = process.env.GITHUB_USERNAME;
+
 export class GithubService {
   static async fetchGitHubIssues(owner: string, repo: string) {
     logger.info(`Fetching GitHub issues for ${owner}/${repo}`);

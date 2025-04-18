@@ -1,7 +1,4 @@
 import { GitlabService } from '../services/gitlab';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export const gitlabResolvers = {
   Query: {
