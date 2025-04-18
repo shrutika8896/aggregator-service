@@ -61,7 +61,13 @@ The following environment variables are required:
 - `GITHUB_TOKEN`: Your GitHub API token.
 - `GITHUB_USERNAME`: Your GitHub username,
 - `GITLAB_TOKEN`: Your GitLab API token.
-- `DATABASE_URL`: Connection string for your PostgreSQL database.
+- `Database Credentials`:
+-  POSTGRES_HOST
+-  POSTGRES_PORT
+-  POSTGRES_USER
+-  POSTGRES_PASSWORD
+-  POSTGRES_DB
+
 
 ## API Endpoints
 
@@ -73,6 +79,8 @@ The following GraphQL queries are available:
 - `githubOrganizationMembers`: Fetch members in the organizations
 - Additional queries and mutations can be added as needed.
 
-## Logging
-
-Check the application logs on : https://onenr.io/02R578DpgQb
+## Docker
+`build docker image`: docker build -t shrutika8896/aggregator-service .
+`push image to hub`: docker push shrutika8896/aggregator-service
+`pull image`: docker pull shrutika8896/aggregator-service
+`run on the local system`: docker run -it -p 4000:4000 shrutika8896/aggregator-service

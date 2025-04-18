@@ -20,16 +20,16 @@ AppDataSource.initialize()
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  formatError: (error: import('graphql').GraphQLError) => {
-    // Log the error to New Relic
-    logger.error(error);
-
-    /* Format the error for the response
+  /* Format the error for the response
      todo: Create separate error handling middleware
      to handle different types of errors (e.g., validation, authentication)
      and return appropriate messages to the client
      For now, we will just return the error message and locations
      along with the error code and exception details */
+  formatError: (error: import('graphql').GraphQLError) => {
+    // Log the error to New Relic
+    logger.error(error);
+    console.log('Error:', error);
     return {
       message: error.message,
       locations: error.locations,

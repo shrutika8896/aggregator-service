@@ -10,6 +10,7 @@ export const gitlabTypeDefs = gql`
   type Query {
     gitlabIssues: [Issue!]!
     gitlabProjects: [Project!]!
+    gitlabProfile: Profile!
   }
 
   type Issue {
@@ -19,5 +20,14 @@ export const gitlabTypeDefs = gql`
     url: String!
     createdAt: String!
     updatedAt: String!
+  }
+
+  type Profile {
+    id: String!
+    name: String
+    webUrl: String
+    username: String
+    avatarUrl: String
+    email: String
   }
 `;
