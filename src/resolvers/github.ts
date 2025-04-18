@@ -1,5 +1,6 @@
 import { GithubService } from '../services/github';
 import { LoggerService as logger } from '../services/logger';
+import { AppError } from '../utils/AppError';
 
 export const githubResolvers = {
   Query: {
@@ -11,7 +12,7 @@ export const githubResolvers = {
         return await GithubService.fetchGitHubIssues(owner, repo);
       } catch (error: any) {
         logger.error(error);
-        throw new Error(
+        throw new AppError(
           'Failed to fetch GitHub issues. Please try again later.'
         );
       }
@@ -22,7 +23,7 @@ export const githubResolvers = {
         return await GithubService.fetchGitHubRepositories();
       } catch (error: any) {
         logger.error(error);
-        throw new Error(
+        throw new AppError(
           'Failed to fetch GitHub repositories. Please try again later.'
         );
       }
@@ -33,7 +34,7 @@ export const githubResolvers = {
         return await GithubService.fetchGitHubUserProfile();
       } catch (error: any) {
         logger.error(error);
-        throw new Error(
+        throw new AppError(
           'Failed to fetch GitHub user profile. Please try again later.'
         );
       }
@@ -47,7 +48,7 @@ export const githubResolvers = {
         return await GithubService.fetchGitHubOrganizationMembers(organization);
       } catch (error: any) {
         logger.error(error);
-        throw new Error(
+        throw new AppError(
           'Failed to fetch GitHub organization members. Please try again later.'
         );
       }

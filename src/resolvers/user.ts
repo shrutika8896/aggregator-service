@@ -1,4 +1,5 @@
 import { UserService } from '../services/user';
+import { AppError } from '../utils/AppError';
 
 const userService = new UserService();
 
@@ -42,6 +43,17 @@ export const userResolvers = {
         userName,
         accessToken
       );
+    },
+    generateToken: async (
+      _: any,
+      { email, password }: { email: string; password: string }
+    ) => {
+      try {
+        const token = await userService.validateUser(email, password);
+        return { token };
+      } catch (error: any) {
+        throw new AppError(error.message, error.statusCode);
+      }
     }
   }
 };

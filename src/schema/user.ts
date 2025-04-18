@@ -18,6 +18,10 @@ export const userTypeDefs = gql`
     createdAt: String
   }
 
+  type Token {
+    token: String!
+  }
+
   type Query {
     getUser(id: ID!): User
     getCredentials(userId: ID!, service: String!): [Credential!]!
@@ -31,5 +35,6 @@ export const userTypeDefs = gql`
       userName: String!
       accessToken: String!
     ): Credential!
+    generateToken(email: String!, password: String!): Token!
   }
 `;
