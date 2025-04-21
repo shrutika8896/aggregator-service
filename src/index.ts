@@ -5,7 +5,7 @@ import 'newrelic';
 import 'reflect-metadata';
 import { AppDataSource } from './config/database';
 import dotenv from 'dotenv';
-import { LoggerService as logger } from './services/logger';
+import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
 
@@ -26,20 +26,7 @@ const server = new ApolloServer({
      and return appropriate messages to the client
      For now, we will just return the error message and locations
      along with the error code and exception details */
-  formatError: (error: import('graphql').GraphQLError) => {
-    // Log the error to New Relic
-    logger.error(error);
-    console.log('Error:', error);
-    return {
-      message: error.message,
-      locations: error.locations,
-      path: error.path,
-      extensions: {
-        code: error.extensions?.code || 'INTERNAL_SERVER_ERROR',
-        exception: error.extensions?.exception || {}
-      }
-    };
-  }
+  formatError: errorHandler
 });
 
 const PORT = process.env.PORT || 4000;
