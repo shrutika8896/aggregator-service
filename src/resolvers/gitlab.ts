@@ -2,14 +2,17 @@ import { GitlabService } from '../services/gitlab';
 
 export const gitlabResolvers = {
   Query: {
-    gitlabIssues: async () => {
-      return await GitlabService.getIssues('12345'); // Replace with actual project ID
+    gitlabIssues: async (
+      _: any,
+      { projectId, userId }: { projectId: string; userId: string }
+    ) => {
+      return await GitlabService.getIssues(projectId, userId);
     },
-    gitlabProjects: async () => {
-      return await GitlabService.getProjects();
+    gitlabProjects: async (_: any, { userId }: { userId: string }) => {
+      return await GitlabService.getProjects(userId);
     },
-    gitlabProfile: async () => {
-      return await GitlabService.getGitlabProfile();
+    gitlabProfile: async (_: any, { userId }: { userId: string }) => {
+      return await GitlabService.getGitlabProfile(userId);
     }
   }
 };

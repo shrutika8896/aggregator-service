@@ -12,3 +12,11 @@ export enum HttpStatusCodes {
   // 5xx: Server Errors
   INTERNAL_SERVER_ERROR = 500 // Generic server error
 }
+
+export enum Services {
+  GITHUB = 'github',
+  GITLAB = 'gitlab'
+}
+
+export const GITHUB_API_URL = 'https://api.github.com/graphql';
+export const GITLAB_API_URL = 'https://gitlab.com/api/graphql';

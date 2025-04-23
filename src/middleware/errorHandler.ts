@@ -19,7 +19,7 @@ export const errorHandler = (error: GraphQLError) => {
     path: error.path,
     extensions: {
       code:
-        error.extensions?.exception.statusCode ||
+        error.extensions?.exception?.statusCode ||
         error.extensions?.code ||
         HttpStatusCodes.INTERNAL_SERVER_ERROR,
       exception: error.extensions?.exception || {}

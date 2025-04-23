@@ -6,10 +6,10 @@ export const githubResolvers = {
   Query: {
     githubIssues: async (
       _: any,
-      { repo, owner }: { repo: string; owner: string }
+      { repo, owner, userId }: { repo: string; owner: string; userId: string }
     ) => {
       try {
-        return await GithubService.fetchGitHubIssues(owner, repo);
+        return await GithubService.fetchGitHubIssues(owner, repo, userId);
       } catch (error: any) {
         logger.error(error);
         throw new AppError(
@@ -18,9 +18,9 @@ export const githubResolvers = {
       }
     },
 
-    githubRepositories: async () => {
+    githubRepositories: async (_: any, { userId }: { userId: string }) => {
       try {
-        return await GithubService.fetchGitHubRepositories();
+        return await GithubService.fetchGitHubRepositories(userId);
       } catch (error: any) {
         logger.error(error);
         throw new AppError(
@@ -29,9 +29,9 @@ export const githubResolvers = {
       }
     },
 
-    githubUserProfile: async () => {
+    githubUserProfile: async (_: any, { userId }: { userId: string }) => {
       try {
-        return await GithubService.fetchGitHubUserProfile();
+        return await GithubService.fetchGitHubUserProfile(userId);
       } catch (error: any) {
         logger.error(error);
         throw new AppError(
@@ -42,10 +42,13 @@ export const githubResolvers = {
 
     githubOrganizationMembers: async (
       _: any,
-      { organization }: { organization: string }
+      { organization, userId }: { organization: string; userId: string }
     ) => {
       try {
-        return await GithubService.fetchGitHubOrganizationMembers(organization);
+        return await GithubService.fetchGitHubOrganizationMembers(
+          organization,
+          userId
+        );
       } catch (error: any) {
         logger.error(error);
         throw new AppError(

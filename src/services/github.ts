@@ -1,14 +1,28 @@
 import axios from 'axios';
 import { LoggerService as logger } from './logger';
 import dotenv from 'dotenv';
+import { UserService } from './user';
+import { Services, GITHUB_API_URL } from '../utils/constant';
 dotenv.config();
-const GITHUB_API_URL = 'https://api.github.com/graphql';
-const token = process.env.GITHUB_TOKEN;
-const username = process.env.GITHUB_USERNAME;
 
+/*
+todo: get userId from jwt token sent in the request headers and then get the credentials for that user. 
+For now we are using it from request body. 
+*/
 export class GithubService {
-  static async fetchGitHubIssues(owner: string, repo: string) {
-    logger.info(`Fetching GitHub issues for ${owner}/${repo}`);
+  static userService = new UserService();
+  static async fetchGitHubIssues(owner: string, repo: string, userId: string) {
+    logger.info(
+      `Fetching GitHub issues for ${owner}/${repo} by user ${userId}`
+    );
+    const credentials = await this.userService.getCredentialsForService(
+      userId,
+      Services.GITHUB
+    );
+    if (!credentials) {
+      logger.warn(`No credentials found for user ${userId}`);
+      throw new Error('No credentials found');
+    }
     const query = `
             query($owner: String!, $repo: String!) {
                 repository(owner: $owner, name: $repo) {
@@ -36,7 +50,7 @@ export class GithubService {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${credentials.accessToken}`
         }
       }
     );
@@ -44,8 +58,16 @@ export class GithubService {
     return response.data.data.repository.issues.nodes;
   }
 
-  static async fetchGitHubRepositories() {
-    logger.info(`Fetching GitHub repositories for ${username}`);
+  static async fetchGitHubRepositories(userId: string) {
+    const credentials = await this.userService.getCredentialsForService(
+      userId,
+      Services.GITHUB
+    );
+    if (!credentials) {
+      logger.warn(`No credentials found for user ${userId}`);
+      throw new Error('No credentials found');
+    }
+    logger.info(`Fetching GitHub repositories for ${credentials.userName}`);
     const query = `
             query($username: String!) {
                 user(login: $username) {
@@ -60,7 +82,7 @@ export class GithubService {
             }
         `;
 
-    const variables = { username };
+    const variables = { username: credentials.userName };
 
     const response = await axios.post(
       GITHUB_API_URL,
@@ -70,7 +92,7 @@ export class GithubService {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${credentials.accessToken}`
         }
       }
     );
@@ -78,8 +100,18 @@ export class GithubService {
     return response.data.data.user.repositories.nodes;
   }
 
-  static async fetchGitHubUserProfile() {
-    logger.info(`Fetching GitHub user profile for ${username}`);
+  static async fetchGitHubUserProfile(userId: string) {
+    const credentials = await this.userService.getCredentialsForService(
+      userId,
+      Services.GITHUB
+    );
+    if (!credentials) {
+      logger.warn(`No credentials found for user ${userId}`);
+      throw new Error('No credentials found');
+    }
+    logger.info(
+      `Fetching GitHub user profile for ${credentials.userName} by user ${userId}`
+    );
     const query = `
             query($username: String!) {
                 user(login: $username) {
@@ -96,7 +128,7 @@ export class GithubService {
             }
         `;
 
-    const variables = { username };
+    const variables = { username: credentials.userName };
     const response = await axios.post(
       GITHUB_API_URL,
       {
@@ -105,7 +137,7 @@ export class GithubService {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${credentials.accessToken}`
         }
       }
     );
@@ -113,9 +145,18 @@ export class GithubService {
     return response.data.data.user;
   }
 
-  static async fetchGitHubOrganizationMembers(org: string) {
-    logger.info(`Fetching GitHub organization members for ${org}`);
-
+  static async fetchGitHubOrganizationMembers(org: string, userId: string) {
+    logger.info(
+      `Fetching GitHub organization members for ${org} by user ${userId}`
+    );
+    const credentials = await this.userService.getCredentialsForService(
+      userId,
+      Services.GITHUB
+    );
+    if (!credentials) {
+      logger.warn(`No credentials found for user ${userId}`);
+      throw new Error('No credentials found');
+    }
     const query = `
             query($org: String!) {
                 organization(login: $org) {
@@ -142,7 +183,7 @@ export class GithubService {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${credentials.accessToken}`
         }
       }
     );

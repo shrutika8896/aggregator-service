@@ -4,7 +4,7 @@ import { Credential } from '../entities/credential';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { AppError } from '../utils/AppError';
-import { HttpStatusCodes } from '../utils/constant';
+import { HttpStatusCodes, Services } from '../utils/constant';
 
 export class UserService {
   private userRepository = AppDataSource.getRepository(User);
@@ -57,10 +57,11 @@ export class UserService {
 
   async createCredential(
     userId: string,
-    service: string,
+    service: Services,
     userName: string,
     accessToken: string
   ): Promise<Credential> {
+    //todo: Use bcrypt and save encypted username and accessToken in the db
     return await this.credentialRepository.save({
       userId,
       service,
@@ -71,5 +72,15 @@ export class UserService {
 
   async getCredentialsByUserId(userid: string): Promise<Credential[]> {
     return await this.credentialRepository.findBy({ userId: userid });
+  }
+
+  async getCredentialsForService(
+    userid: string,
+    service: Services
+  ): Promise<Credential> {
+    return await this.credentialRepository.findOneBy({
+      userId: userid,
+      service
+    });
   }
 }

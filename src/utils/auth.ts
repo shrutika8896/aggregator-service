@@ -1,13 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AppError } from './AppError';
 import { HttpStatusCodes } from './constant';
+import { LoggerService as logger } from '../services/logger';
 
-export const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateUser = (req: any) => {
   const authHeader = req.headers['authorization'];
 
   if (!authHeader) {
-    throw new AppError('Authorization header is missing', HttpStatusCodes.UNAUTHORIZED);
+    throw new AppError(
+      'Authorization header is missing',
+      HttpStatusCodes.UNAUTHORIZED
+    );
   }
 
   const token = authHeader.split(' ')[1]; // Extract the token from "Bearer <token>"
@@ -18,9 +21,12 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!); // Verify the token
-    req.user = decoded; // Attach the decoded user information to the request object
-    next(); // Proceed to the next middleware or route handler
-  } catch (error) {
-    throw new AppError('Invalid or expired token', HttpStatusCodes.UNAUTHORIZED);
+    return decoded;
+  } catch (error: any) {
+    logger.error(error);
+    throw new AppError(
+      'Invalid or expired token',
+      HttpStatusCodes.UNAUTHORIZED
+    );
   }
 };

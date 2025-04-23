@@ -1,10 +1,22 @@
 import axios from 'axios';
-
-const GITLAB_API_URL = 'https://gitlab.com/api/graphql';
-const GITLAB_TOKEN = process.env.GITLAB_TOKEN;
+import { UserService } from './user';
+import { Services, GITLAB_API_URL } from '../utils/constant';
+import { LoggerService as logger } from './logger';
 
 export class GitlabService {
-  static async getProjects() {
+  /*
+  todo: Get userId from jwt token and use that to fetch service credentials from database.
+  */
+  static userService = new UserService();
+  static async getProjects(userId: string) {
+    const credentials = await this.userService.getCredentialsForService(
+      userId,
+      Services.GITLAB
+    );
+    if (!credentials) {
+      logger.warn(`No credentials found for user ${userId}`);
+      throw new Error('No credentials found');
+    }
     const query = `
       query {
         projects {
@@ -23,7 +35,7 @@ export class GitlabService {
       { query },
       {
         headers: {
-          Authorization: `Bearer ${GITLAB_TOKEN}`,
+          Authorization: `Bearer ${credentials.accessToken}`,
           'Content-Type': 'application/json'
         }
       }
@@ -36,7 +48,15 @@ export class GitlabService {
     return response.data.data?.projects?.nodes || [];
   }
 
-  static async getIssues(projectId: string) {
+  static async getIssues(projectId: string, userId: string) {
+    const credentials = await this.userService.getCredentialsForService(
+      userId,
+      Services.GITLAB
+    );
+    if (!credentials) {
+      logger.warn(`No credentials found for user ${userId}`);
+      throw new Error('No credentials found');
+    }
     const query = `
       query($projectId: ID!) {
         project(fullPath: $projectId) {
@@ -61,7 +81,7 @@ export class GitlabService {
       { query, variables },
       {
         headers: {
-          Authorization: `Bearer ${GITLAB_TOKEN}`,
+          Authorization: `Bearer ${credentials.accessToken}`,
           'Content-Type': 'application/json'
         }
       }
@@ -74,7 +94,15 @@ export class GitlabService {
     return response.data.data?.project?.issues?.nodes || [];
   }
 
-  static async getGitlabProfile() {
+  static async getGitlabProfile(userId: string) {
+    const credentials = await this.userService.getCredentialsForService(
+      userId,
+      Services.GITLAB
+    );
+    if (!credentials) {
+      logger.warn(`No credentials found for user ${userId}`);
+      throw new Error('No credentials found');
+    }
     const query = `
       query {
         currentUser {
@@ -92,7 +120,7 @@ export class GitlabService {
       { query },
       {
         headers: {
-          Authorization: `Bearer ${GITLAB_TOKEN}`,
+          Authorization: `Bearer ${credentials.accessToken}`,
           'Content-Type': 'application/json'
         }
       }
@@ -104,6 +132,4 @@ export class GitlabService {
     // Adjust the return statement based on the actual structure of response.data
     return response.data.data?.currentUser || null;
   }
-
-  // Additional static methods can be added here for other GitLab API interactions.
 }

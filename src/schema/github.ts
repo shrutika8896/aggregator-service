@@ -2,22 +2,22 @@ import { gql } from 'apollo-server';
 
 export const githubTypeDefs = gql`
   type Repository {
-    id: ID!
-    name: String!
-    url: String!
+    id: ID
+    name: String
+    url: String
   }
 
   type GitHubUserProfile {
     id: ID!
-    name: String!
-    login: String!
-    avatarUrl: String!
-    url: String!
+    name: String
+    login: String
+    avatarUrl: String
+    url: String
     bio: String
     company: String
     location: String
     email: String
-    createdAt: String!
+    createdAt: String
   }
 
   type GitHubOrganizationMember {
@@ -29,11 +29,12 @@ export const githubTypeDefs = gql`
   }
 
   type Query {
-    githubIssues(repo: String!, owner: String!): [Issue!]!
-    githubRepositories: [Repository!]!
-    githubUserProfile: GitHubUserProfile!
+    githubIssues(repo: String!, owner: String!, userId: String): [Issue!]!
+    githubRepositories(userId: String): [Repository!]!
+    githubUserProfile(userId: String): GitHubUserProfile!
     githubOrganizationMembers(
       organization: String!
+      userId: String
     ): [GitHubOrganizationMember!]!
   }
 
@@ -42,7 +43,7 @@ export const githubTypeDefs = gql`
     title: String
     body: String
     url: String
-    createdAt: String!
-    updatedAt: String!
+    createdAt: String
+    updatedAt: String
   }
 `;

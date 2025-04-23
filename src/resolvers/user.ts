@@ -1,5 +1,6 @@
 import { UserService } from '../services/user';
 import { AppError } from '../utils/AppError';
+import { Services } from '../utils/constant';
 
 const userService = new UserService();
 
@@ -33,7 +34,7 @@ export const userResolvers = {
       }: {
         userId: string;
         userName: string;
-        service: string;
+        service: Services;
         accessToken: string;
       }
     ) => {

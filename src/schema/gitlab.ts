@@ -2,24 +2,24 @@ import { gql } from 'apollo-server';
 
 export const gitlabTypeDefs = gql`
   type Project {
-    id: ID!
-    name: String!
-    url: String!
+    id: ID
+    name: String
+    url: String
   }
 
   type Query {
-    gitlabIssues: [Issue!]!
-    gitlabProjects: [Project!]!
-    gitlabProfile: Profile!
+    gitlabIssues(projectId: String!, userId: String): [Issue!]!
+    gitlabProjects(userId: String): [Project!]!
+    gitlabProfile(userId: String): Profile!
   }
 
   type Issue {
     id: ID!
-    title: String!
+    title: String
     body: String
-    url: String!
-    createdAt: String!
-    updatedAt: String!
+    url: String
+    createdAt: String
+    updatedAt: String
   }
 
   type Profile {
