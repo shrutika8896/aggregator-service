@@ -83,10 +83,10 @@ GraphQL Mutations:
 
 ## Docker
 Added the Dockerfile in the project and image is uploaded to docker hub. Following are the commands to update and fetch latest docker image:
-`build docker image`: docker build -t shrutika8896/aggregator-service .
-`push image to hub`: docker push shrutika8896/aggregator-service
-`pull image`: docker pull shrutika8896/aggregator-service
-`run on the local system`: docker run -it -p 4000:4000 shrutika8896/aggregator-service
+- `build docker image`: docker build -t shrutika8896/aggregator-service .
+- `push image to hub`: docker push shrutika8896/aggregator-service
+- `pull image`: docker pull shrutika8896/aggregator-service
+- `run on the local system`: docker run -it -p 4000:4000 shrutika8896/aggregator-service
 
 Docker image public URL: https://hub.docker.com/r/shrutika8896/aggregator-service
 
