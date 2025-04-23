@@ -9,8 +9,9 @@ This project is a GraphQL aggregator service that exposes APIs for interacting w
 - [Running the Application](#running-the-application)
 - [Environment Variables](#environment-variables)
 - [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
-- [License](#license)
+- [Docker](#docker)
+- [Application Testing](#application-testing)
+- [Technical Overview](#technical-overview)
 
 ## Prerequisites
 
