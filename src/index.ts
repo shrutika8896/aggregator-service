@@ -20,12 +20,6 @@ AppDataSource.initialize()
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  /* Format the error for the response
-     todo: Create separate error handling middleware
-     to handle different types of errors (e.g., validation, authentication)
-     and return appropriate messages to the client
-     For now, we will just return the error message and locations
-     along with the error code and exception details */
   formatError: errorHandler
 });
 
