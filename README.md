@@ -10,6 +10,7 @@ This project is a GraphQL aggregator service that exposes APIs for interacting w
 - [Environment Variables](#environment-variables)
 - [API Endpoints](#api-endpoints)
 - [Docker](#docker)
+- [CICD](#cicd)
 - [Application Testing](#application-testing)
 - [Technical Overview](#technical-overview)
 
@@ -89,6 +90,9 @@ Added the Dockerfile in the project and image is uploaded to docker hub. Followi
 - `run on the local system`: docker run -it -p 4000:4000 shrutika8896/aggregator-service
 
 Docker image public URL: https://hub.docker.com/r/shrutika8896/aggregator-service
+
+## CICD
+CICD is configured using GitHub Actions. The deployment will trigger every time a commit is pushed to main branch. The docker image will be built and uploaded to the Docker Hub.
 
 ## Application Testing
 1. Use the `createUser` mutation to create a new user. This will return the details of the newly created user, including the `userId`.
